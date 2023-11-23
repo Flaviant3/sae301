@@ -5,5 +5,26 @@
 
 {% block body %}
     <h1>Rappel</h1>
-    {# Contenu de la page "Rappel" #}
+
+    {# Rappels pour les évaluations #}
+    <h2>Évaluations à venir :</h2>
+    {% for evaluation in upcomingEvaluations %}
+        <div>
+            <p>{{ evaluation.title }}</p>
+            <p>Date : {{ evaluation.date|date('Y-m-d') }}</p>
+        </div>
+    {% endfor %}
+
+    {# Rappels pour les rendus de travaux #}
+    <h2>Rendus de travaux à venir :</h2>
+    {% for submission in upcomingSubmissions %}
+        <div>
+            <p>{{ submission.title }}</p>
+            <p>Date limite : {{ submission.deadline|date('Y-m-d') }}</p>
+        </div>
+    {% endfor %}
+
+    {% if not upcomingEvaluations and not upcomingSubmissions %}
+        <p>Aucun rappel pour le moment.</p>
+    {% endif %}
 {% endblock %}

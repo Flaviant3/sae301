@@ -45,3 +45,7 @@ progres:
 collaboration:
     path: /collaboration
     controller: App\Controller\CollaborationController::index
+
+search:
+    path: /search
+    controller: App\Controller\SearchController::search

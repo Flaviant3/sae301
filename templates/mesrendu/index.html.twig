@@ -5,5 +5,15 @@
 
 {% block body %}
     <h1>Mes Rendus</h1>
-    {# Contenu de la page "Mes Rendus" #}
+
+    {% if allSubmissions is defined and allSubmissions|length > 0 %}
+        {# Liste de tous les rendus #}
+        <ul>
+            {% for submission in allSubmissions %}
+                <li>{{ submission.title }} - Matière : {{ submission.subject }} - Date limite : {{ submission.deadline|date('Y-m-d') }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun rendu disponible pour le moment.</p>
+    {% endif %}
 {% endblock %}

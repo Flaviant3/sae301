@@ -5,5 +5,30 @@
 
 {% block body %}
     <h1>Collaboration</h1>
-    {# Contenu de la page "Collaboration" #}
+
+    {# Liste des canaux de discussion pour les rendus #}
+    <h2>Canaux de discussion pour les rendus :</h2>
+    {% if submissionChannels is defined and submissionChannels|length > 0 %}
+        <ul>
+            {% for channel in submissionChannels %}
+                <li>{{ channel.name }} - Rendu : {{ channel.submissionTitle }}</li>
+                <p>{{ channel.description }}</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun canal de discussion disponible pour les rendus pour le moment.</p>
+    {% endif %}
+
+    {# Liste des canaux de discussion pour les évaluations #}
+    <h2>Canaux de discussion pour les évaluations :</h2>
+    {% if evaluationChannels is defined and evaluationChannels|length > 0 %}
+        <ul>
+            {% for channel in evaluationChannels %}
+                <li>{{ channel.name }} - Évaluation : {{ channel.evaluationTitle }}</li>
+                <p>{{ channel.description }}</p>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun canal de discussion disponible pour les évaluations pour le moment.</p>
+    {% endif %}
 {% endblock %}

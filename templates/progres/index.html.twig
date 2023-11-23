@@ -5,5 +5,28 @@
 
 {% block body %}
     <h1>Progrès</h1>
-    {# Contenu de la page "Progrès" #}
+
+    {# Liste des rendus effectués #}
+    <h2>Rendus effectués :</h2>
+    {% if completedSubmissions is defined and completedSubmissions|length > 0 %}
+        <ul>
+            {% for submission in completedSubmissions %}
+                <li>{{ submission.title }} - {{ submission.date|date('Y-m-d') }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun rendu effectué pour le moment.</p>
+    {% endif %}
+
+    {# Liste des rendus non effectués #}
+    <h2>Rendus non effectués :</h2>
+    {% if pendingSubmissions is defined and pendingSubmissions|length > 0 %}
+        <ul>
+            {% for submission in pendingSubmissions %}
+                <li>{{ submission.title }} - Date limite : {{ submission.deadline|date('Y-m-d') }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun rendu en attente pour le moment.</p>
+    {% endif %}
 {% endblock %}

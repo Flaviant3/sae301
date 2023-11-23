@@ -5,5 +5,15 @@
 
 {% block body %}
     <h1>Mes Évaluations</h1>
-    {# Contenu de la page "Mes Évaluations" #}
+
+    {% if allEvaluations is defined and allEvaluations|length > 0 %}
+        {# Liste de toutes les évaluations #}
+        <ul>
+            {% for evaluation in allEvaluations %}
+                <li>{{ evaluation.title }} - Matière : {{ evaluation.subject }} - Date : {{ evaluation.date|date('Y-m-d') }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune évaluation disponible pour le moment.</p>
+    {% endif %}
 {% endblock %}
