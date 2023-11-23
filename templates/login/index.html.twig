@@ -1,0 +1,28 @@
+{# templates/login/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    <h1>Page de connexion</h1>
+
+    {% if app.session.flashbag.get('error') %}
+        <p>{{ app.session.flashbag.get('error')|default('') }}</p>
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    {# Ajoutez un bouton "Se connecter" #}
+    <button type="submit">Se connecter</button>
+
+    {{ form_end(form) }}
+
+    {# Ajoutez le reste de votre contenu si nécessaire #}
+
+    {% if userData %}
+        <h1>Bienvenue, {{ userData['nom'] }} {{ userData['prenom'] }}!</h1>
+        {# Ajoutez des messages de bienvenue ou d'autres contenus si nécessaire #}
+    {% endif %}
+{% endblock %}

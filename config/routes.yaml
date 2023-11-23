@@ -1,0 +1,47 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+# config/routes.yaml
+
+register:
+    path: /register
+    controller: App\Controller\RegisterController::register
+
+login:
+    path: /connexion
+    controller: App\Controller\LoginController::login
+
+profil:
+    path: /profil
+    controller: 'App\Controller\ProfilController::index'
+
+recherche:
+    path: /recherche
+    controller: App\Controller\RechercheController::index
+
+echeances:
+    path: /echeances
+    controller: App\Controller\EcheancesController::index
+
+mesrendu:
+    path: /mesrendu
+    controller: App\Controller\MesRenduController::index
+
+meseval:
+    path: /meseval
+    controller: App\Controller\MesEvalController::index
+
+rappel:
+    path: /rappel
+    controller: App\Controller\RappelController::index
+
+progres:
+    path: /progres
+    controller: App\Controller\ProgresController::index
+
+collaboration:
+    path: /collaboration
+    controller: App\Controller\CollaborationController::index
