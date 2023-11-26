@@ -4,32 +4,139 @@
 {% block title %}Mon Profil{% endblock %}
 
 {% block body %}
+    <style>
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        /* Styles pour chaque champ du formulaire */
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        /* Style spécifique pour le champ de la photo de profil */
+        .photo-input {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .profile-picture {
+            width: 100px; /* Ajustez la taille selon vos préférences */
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0; /* L'icône est initialement invisible */
+            transition: opacity 0.3s;
+        }
+
+        .profile-picture:hover .camera-icon {
+            opacity: 1; /* L'icône devient visible lorsqu'on survole la photo de profil */
+        }
+
+        /* Style pour le bouton Enregistrer */
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
     <h1>Mon Profil</h1>
 
     {{ form_start(form) }}
 
     {# Changer la photo de profil #}
-    {{ form_row(form.photo) }}
+    <div class="form-group photo-input">
+        <div class="profile-picture" onclick="showImagePopup()">
+            <img src="{{ asset('path/to/your/profile-image.jpg') }}" alt="Profile Picture">
+            <img class="camera-icon" src="{{ asset('path/to/camera-icon.png') }}" alt="Camera Icon">
+        </div>
+        <input type="file" style="display: none;" name="{{ form.photo.vars.full_name }}">
+    </div>
 
     {# Modifier le prénom #}
-    {{ form_row(form.firstName) }}
+    <div class="form-group">
+        {{ form_row(form.firstName) }}
+    </div>
 
     {# Modifier le nom #}
-    {{ form_row(form.lastName) }}
+    <div class="form-group">
+        {{ form_row(form.lastName) }}
+    </div>
 
     {# Modifier le mot de passe #}
-    {{ form_row(form.password) }}
+    <div class="form-group">
+        {{ form_row(form.password) }}
+    </div>
 
     {# Afficher l'adresse e-mail comme du texte #}
-    <div>
+    <div class="form-group">
         {{ form_label(form.email) }}
         {{ form_widget(form.email) }}
     </div>
 
     {# Bouton Enregistrer #}
-    {{ form_row(form.save) }}
+    <div class="form-group">
+        {{ form_row(form.save) }}
+    </div>
 
     {# Ajoute d'autres champs ici au besoin #}
 
     {{ form_end(form) }}
+
+    <script>
+        function showImagePopup() {
+            document.querySelector('input[type="file"]').click();
+        }
+    </script>
 {% endblock %}
