@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page Progrès{% endblock %}
+
+{% block body %}
+    <h1>Page Progrès :</h1>
+    <h2>Mes évals<h2>
+    {% if app.request.query.has('hiddenElements') %}
+        {# Récupérer les données masquées depuis l'URL #}
+        {% set hiddenElementsJSON = app.request.query.get('hiddenElements') %}
+        {% set hiddenElements = hiddenElementsJSON|json_decode %}
+        
+        <ul>
+            {% for hiddenElement in hiddenElements %}
+                <li>{{ hiddenElement.title }} - Date : {{ hiddenElement.date }}</li>
+            {% endfor %}
+        </ul>
+        <button onclick="remiseAZero()">Remise à zéro</button>
+    {% else %}
+        <p>Aucune donnée masquée disponible.</p>
+    {% endif %}
+
+    <h2>Mes rendus<h2>
+        {% if app.request.query.has('hiddenElements2') %}
+        {# Récupérer les données masquées depuis l'URL #}
+        {% set hiddenElements2JSON = app.request.query.get('hiddenElements2') %}
+        {% set hiddenElements2 = hiddenElements2JSON|json_decode %}
+        
+        <ul>
+            {% for hiddenElement2 in hiddenElements2 %}
+                <li>{{ hiddenElement2.title }} - Date : {{ hiddenElement2.date }} - Travail : {{ hiddenElement2.description }}</li>
+            {% endfor %}
+        </ul>
+        <button onclick="remiseAZero()">Remise à zéro</button>
+    {% else %}
+        <p>Aucune donnée masquée disponible.</p>
+    {% endif %}
+
+
+
+    
+    <div id="rendus-transferred-list"></div> {# Container pour les éléments transférés #}
+    
+    <script>
+        // Fonction pour supprimer tous les rendus transférés
+        function remiseAZero() {
+            var rendusTransferredList = document.getElementById('rendus-transferred-list');
+            
+            // Supprimer tous les éléments dans le conteneur des rendus transférés
+            while (rendusTransferredList.firstChild) {
+                rendusTransferredList.firstChild.remove();
+            }
+            
+            // Supprimer les données du localStorage
+            localStorage.removeItem('hiddenElements');
+        }
+    </script>
+{% endblock %}

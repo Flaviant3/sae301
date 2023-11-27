@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Évaluations{% endblock %}
+
+{% block body %}
+    <h1>Mes évaluations :</h1>
+    <div class="rendu-row">
+        <!-- Carré 1 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">01/01/2023</div>
+            <p>Faire les exercices 1,2 et 5</p>
+            <div class="ressource3">Mathématiques</div>
+        </div>
+
+        <!-- Carré 2 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">02/01/2023</div>
+            <p>Rendre un rapport sur EVA</p>
+            <div class="ressource3">Droit </div>
+        </div>
+
+        <!-- Carré 3 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">03/01/2023</div>
+            <p>Site Toy-Story</p>
+            <div class="ressource3">Développement Front</div>
+        </div>
+
+        <!-- Carré 4 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">04/01</div>
+            <p>Description de la ressource</p>
+            <div class="ressource3">Nom ressource</div>
+        </div>
+
+        <!-- Carré 5 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">05/01</div>
+            <p>Description de la ressource</p>
+            <div class="ressource3">Nom ressource</div>
+        </div>
+
+        <!-- Carré 6 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">05/01</div>
+            <p>Description de la ressource</p>
+            <div class="ressource3">Nom ressource</div>
+        </div>
+
+        <!-- Carré 7 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">05/01</div>
+            <p>Ressource TEST</p>
+            <div class="ressource3">Ressource TEST</div>
+        </div>
+
+        <!-- Carré 8 -->
+        <div class="rendu" onclick="hideElement(this)">
+            <div class="date">05/01</div>
+            <p>Description de la ressource</p>
+            <div class="ressource3">Nom ressource</div>
+        </div>
+    </div>
+
+    {% if allEvaluations is defined and allEvaluations|length > 0 %}
+        {# Liste de toutes les évaluations #}
+        <ul>
+            {% for evaluation in allEvaluations %}
+                <li>{{ evaluation.title }} - Matière : {{ evaluation.subject }} - Date : {{ evaluation.date|date('Y-m-d') }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune évaluation disponible pour le moment.</p>
+    {% endif %}
+
+    <script>
+        // Charger les données masquées depuis localStorage
+        var hiddenElements = JSON.parse(localStorage.getItem('hiddenElements')) || [];
+
+        function hideElement(element) {
+            element.style.display = 'none';
+            moveElementToProgress(element);
+            storeHiddenElementData(element);
+        }
+
+        function moveElementToProgress(element) {
+            // ... (comme précédemment)
+        }
+        function storeHiddenElementData(element) {
+            // Récupérer les données de l'évaluation
+            var evaluationTitleElement = element.querySelector('.ressource3'); // Utiliser la classe correcte ici
+            var evaluationDateElement = element.querySelector('.date');
+
+            // Vérifier si les éléments existent avant d'accéder à leurs propriétés
+            var evaluationTitle = evaluationTitleElement ? evaluationTitleElement.textContent.trim() : '';
+            var evaluationDate = evaluationDateElement ? evaluationDateElement.textContent.trim() : '';
+
+            // Créer un objet avec les données
+            var evaluationData = {
+                title: evaluationTitle,
+                date: evaluationDate
+            };
+
+            // Ajouter les données au tableau des éléments masqués
+            hiddenElements.push(evaluationData);
+
+            // Convertir le tableau en chaîne JSON
+            var hiddenElementsJSON = JSON.stringify(hiddenElements);
+
+            // Stocker la chaîne JSON dans localStorage
+            localStorage.setItem('hiddenElements', hiddenElementsJSON);
+
+            // Rediriger vers la page Progrès avec les données dans l'URL
+            var redirectUrl = '{{ path("app_progres") }}?hiddenElements=' + encodeURIComponent(hiddenElementsJSON);
+            window.location.href = redirectUrl;
+        }
+    </script>
+{% endblock %}

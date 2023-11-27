@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Évaluations{% endblock %}
+
+{% block body %}
+    <h1>Mes rendus :</h1>
+    <div class="rendu-row">
+        <!-- Carré 1 -->
+        <div class="rendu" onclick="hideElement2(this)">
+            <div class="date">01/01/2023</div>
+            <p class="Desc">Faire les exercices 1,2 et 5</p>
+            <div class="ressource">Mathématiques</div>
+        </div>
+
+        <!-- Carré 2 -->
+        <div class="rendu" onclick="hideElement2(this)">
+            <div class="date">02/01/2023</div>
+            <p class="Desc">Rendre un rapport sur EVA</p>
+            <div class="ressource">Droit </div>
+        </div>
+
+        <!-- ... (rest of your HTML) ... -->
+
+    </div>
+    {% if allRendus is defined and allRendus|length > 0 %}
+        {# Liste de toutes les évaluations #}
+        <ul>
+            {% for rendu in allRendus %}
+                <li>{{ rendu.title }} - Matière : {{ rendu.subject }} - Date : {{ rendu.date|date('Y-m-d') }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucune évaluation disponible pour le moment.</p>
+    {% endif %}
+
+    <script>
+        // Charger les données masquées depuis localStorage
+        var hiddenElements2 = JSON.parse(localStorage.getItem('hiddenElements2')) || [];
+
+        function hideElement2(element) {
+            element.style.display = 'none';
+            moveElementToProgress(element);
+            storeHiddenElementData2(element);
+        }
+
+        function moveElementToProgress(element) {
+            // ... (comme précédemment)
+        }
+
+        function storeHiddenElementData2(element) {
+            // Récupérer les données du rendu
+            var renduTitleElement = element.querySelector('.ressource');
+            var renduDateElement = element.querySelector('.date');
+            var renduDescriptionElement = element.querySelector('.Desc'); // Utiliser la classe correcte ici
+
+            // Vérifier si les éléments existent avant d'accéder à leurs propriétés
+            var renduTitle = renduTitleElement ? renduTitleElement.textContent.trim() : '';
+            var renduDate = renduDateElement ? renduDateElement.textContent.trim() : '';
+            var renduDescription = renduDescriptionElement ? renduDescriptionElement.textContent.trim() : '';
+
+            // Créer un objet avec les données
+            var renduData = {
+                title: renduTitle,
+                date: renduDate,
+                description: renduDescription
+            };
+
+            // Ajouter les données au tableau des éléments masqués
+            hiddenElements2.push(renduData);
+
+            // Convertir le tableau en chaîne JSON
+            var hiddenElements2JSON = JSON.stringify(hiddenElements2);
+
+            // Stocker la chaîne JSON dans localStorage
+            localStorage.setItem('hiddenElements2', hiddenElements2JSON);
+
+            // Rediriger vers la page Progrès avec les données dans l'URL
+            var redirectUrl = '{{ path("app_progres") }}?hiddenElements2=' + encodeURIComponent(hiddenElements2JSON);
+            window.location.href = redirectUrl;
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{# templates/profil/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <li class="nav-group-1">
+        <a href="{{ path('app_meseval') }}">Mes evals</a><br>
+        <a href="{{ path('app_echeances') }}">Mes écheances</a><br>
+        <a href="{{ path('app_mesrendu') }}">Mes rendu</a><br>
+        <a href="{{ path('app_progres') }}">Ma progression</a><br>
+
+
+    </li>
+
+    <h1>Mon Profil</h1>
+
+    {{ form_start(form) }}
+
+    {# Changer la photo de profil #}
+    {{ form_row(form.photo) }}
+
+    {# Modifier le prénom #}
+    {{ form_row(form.firstName) }}
+
+    {# Modifier le nom #}
+    {{ form_row(form.lastName) }}
+
+    {# Modifier le mot de passe #}
+    {{ form_row(form.password) }}
+
+    {# Afficher l'adresse e-mail comme du texte #}
+    <div>
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+    </div>
+
+    {# Bouton Enregistrer #}
+    {{ form_row(form.save) }}
+
+    {# Ajoute d'autres champs ici au besoin #}
+
+    {{ form_end(form) }}
+
+
+{% endblock %}
